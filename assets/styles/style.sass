@@ -1,0 +1,171 @@
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,700&display=swap')
+
+// resets
+*, *::after, *::before
+    margin: 0
+    padding: 0
+    box-sizing: inherit
+    -webkit-tap-highlight-color: transparent
+
+body
+    font-size: 100%
+    font-family: 'Poppins', sans-serif
+    box-sizing: border-box
+    overflow-x: hidden
+    scroll-behavior: smooth
+
+h1, h2, h3, h4, h5, h6
+    font-family: 'Kanit', sans-serif
+
+// variables
+$black: #000
+$white: #fff
+$crem: #f1d48d
+$brown: #693f09
+
+// classes
+.fade
+    transform: translateY(0) !important
+    opacity: 1 !important
+
+.first-line
+    transform: rotate(45deg)
+    top: .45rem
+
+.second-line
+    transform: rotate(-45deg)
+    top: -.45rem
+
+.display-block
+    display: block !important
+
+.go-up
+    transform: translateY(0) !important
+
+// actual coding
+.burger-menu
+    position: absolute
+    display: flex
+    flex-direction: column
+    gap: .3rem
+    top: 3.5rem
+    right: 2rem
+    width: 2.2rem
+    height: 1.9rem
+    padding: .25rem
+    background: white
+    border-radius: .2rem
+    z-index: 1001
+    cursor: pointer
+    .burger-line
+        position: relative
+        width: 100%
+        height: .5rem
+        background: $black 
+        border-radius: .1rem
+        transform-origin: center
+        transition: all 250ms ease-out
+    .burger-line:first-of-type
+        background: $brown
+        z-index: 1002
+
+.menu-UI
+    display: none
+    position: absolute
+    width: 100%
+    height: 100%
+    padding: 2rem
+    background: $crem
+    transform: translateY(100%)
+    transition: transform 250ms ease-out
+    z-index: 1000
+    h2
+        font-size: 2rem
+    ul
+        display: flex
+        flex-direction: column
+        gap: 1.5rem
+        padding: 2rem
+        list-style: none
+        li
+            transform: translateY(4rem)
+            transition: transform 300ms linear
+            a
+                text-decoration: none
+                color: $black
+                font-weight: 700
+                font-size: 2rem
+                &:hover
+                    text-decoration: underline      
+
+header
+    display: flex
+    align-items: center
+    width: 100%
+    height: 100vh
+    padding: 1rem
+    background: $black
+    color: $white
+    h1
+        width: clamp(300px, 50%, 350px)
+        font-size: 2.25rem
+        .splitWord
+            display: inline-block
+            margin: 0 .29rem
+            transform: translateY(50px)
+            opacity: 0
+            transition: all .75s ease-out
+
+section
+    height: 500px
+
+footer
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 3rem
+    gap: 2rem
+    font-weight: 700
+    // font-size: 1.15rem
+    background: $black
+    color: $white
+    ul
+        list-style: none
+        li:first-of-type
+            font-size: 1.25rem
+            text-decoration: underline
+    p
+        a
+            text-decoration: none
+            color: $crem
+            font-weight: 700
+            font-size: 1.25rem
+
+
+@media ( min-width: 350px )
+    body
+        header
+            padding: 2rem
+
+@media (min-width: 700px )
+    body
+        header
+            padding: 1rem 3rem
+            h1
+                width: clamp(300px, 70%, 450px)
+                font-size: 3rem
+        .menu-UI
+            padding: 3rem
+            h2
+                font-size: 2.25rem
+            ul
+                li
+                    a
+                        font-size: 3rem
+        footer
+            flex-direction: row
+            gap: 8rem
+            font-size: 1.15rem
