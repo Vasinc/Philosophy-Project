@@ -2,6 +2,8 @@ const burgerMenu = document.querySelector('.burger-menu');
 const burgerLines = burgerMenu.querySelectorAll('.burger-line');
 const burgerMenuOptions = document.querySelectorAll('.burger-menu__option');
 const menuUI = document.querySelector('.menu-UI')
+const progress = document.querySelector('.progress__growing-bar');
+const scrollUpButton = document.querySelector('.scroll-up__button');
 const h1 = document.getElementById('header-text');
 const splitText = h1.textContent.trim().split(' ');
 h1.textContent = '';
@@ -16,6 +18,13 @@ for (let i = 0; i < splitText.length; i++) {
     const word = splitText[i];
     h1.innerHTML += `<span class='splitWord'>${word}</span>`;
 }
+
+function updateProgress() {
+    progress.style.width = `${(window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100}%`
+    requestAnimationFrame(updateProgress);
+}
+
+updateProgress();
 
 function onTick() {
     const splitWord = document.querySelectorAll('.splitWord')[curWord];
@@ -84,4 +93,21 @@ menuUI.addEventListener('click', event => {
             }
         }, 1);
         menuUI.classList.toggle('display-block')
+})
+
+addEventListener('scroll', () => {
+    if (window.scrollY >= (window.innerHeight - 300)) {
+        scrollUpButton.classList.add('display-block')
+        setTimeout(() => {
+            scrollUpButton.classList.add('fade');
+        }, 1);
+    }  else {
+        scrollUpButton.classList.remove('fade');
+        scrollUpButton.classList.remove('display-block')
+    }
+
+})
+
+scrollUpButton.addEventListener('click', () => {
+    document.querySelector('header').scrollIntoView();
 })
