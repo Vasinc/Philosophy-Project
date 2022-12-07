@@ -17,6 +17,10 @@ body {
   scroll-behavior: smooth;
 }
 
+main {
+  scroll-behavior: smooth;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Fredoka One', cursive;
 }
@@ -210,7 +214,7 @@ section {
           align-items: center;
   gap: 2rem;
   padding: 2rem;
-  margin-bottom: 6rem;
+  margin-bottom: 8rem;
 }
 
 section h2 {
@@ -223,6 +227,12 @@ section p {
   font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.9;
+}
+
+section .bold-text {
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: underline;
 }
 
 footer {
