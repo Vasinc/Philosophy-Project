@@ -1,0 +1,141 @@
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap')
+
+// resets
+*, *::after, *::before
+    margin: 0
+    padding: 0
+    box-sizing: inherit
+    -webkit-tap-highlight-color: transparent
+
+body
+    font-size: 100%
+    font-family: 'Roboto', sans-serif
+    box-sizing: border-box
+    overflow: hidden
+    scroll-behavior: smooth
+
+main
+    scroll-behavior: smooth
+
+// variables
+
+
+// classes
+.zoom-in
+    transform: scale(3.5) translateY(-3rem) translateX(-4rem)
+
+.display-block
+    display: block !important
+
+// actual coding
+#home
+    position: absolute
+    top: 1rem
+    left: 1rem
+    cursor: pointer
+    z-index: 1000
+    img
+        height: 2rem
+        width: 4rem
+
+#courtyard
+    // display: none
+    height: 100vh
+    width: 100%
+    background: url('../images/judgeroom.jpg')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: center
+    cursor: pointer
+    transition: all 400ms linear
+
+#desk
+    display: none
+    position: relative
+    height: 100vh
+    width: 100%
+    background: url('../images/woodbackground.jpg')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: center
+
+.pages
+    position: absolute
+    width: 30%
+    max-width: 300px
+    height: 50%
+    top: 50%
+    transform: translateY(-50%) translateX(0)
+    overflow: hidden
+    cursor: pointer
+    box-shadow: 8px 4px 6px 6px rgba(0, 0, 0, .7)
+    &:hover
+        .page:last-of-type
+            background: #faffa5
+            transform: translateX(-2px) translateY(-14px)
+    .page
+        position: absolute
+        height: 100%
+        width: 100%
+        background: white
+        border: 1px solid black
+    .page:nth-of-type(2)
+        transform: translateX(-2px) translateY(-2px)
+        z-index: 2
+    .page:nth-of-type(3)
+        transform: translateX(-4px) translateY(-4px) 
+        z-index: 3
+    .page:nth-of-type(4)
+        transform: translateX(-6px) translateY(-6px)
+        z-index: 4
+    .page:nth-of-type(5)
+        transform: translateX(-8px) translateY(-8px)
+        z-index: 5
+    .page:nth-of-type(6)
+        transform: translateX(-10px) translateY(-10px)
+        z-index: 6
+    .page:nth-of-type(7)
+        transform: translateX(-12px) translateY(-12px)
+        z-index: 7
+    .page:last-of-type
+        transform: translateX(-14px) translateY(-14px)
+        z-index: 8
+        padding: 1rem
+        text-align: center
+        transition: all 100ms linear
+
+.cases-spot
+    position: absolute
+    height: 70%
+    width: 50%
+    max-width: 450px
+    right: 1rem
+    top: 50%
+    transform: translateY(-50%)
+    background: green
+    opacity: .3
+
+@media screen and ( min-width: 600px )
+    main
+        .cases-spot
+            height: 80%
+            right: 3rem
+            
+@media screen and ( min-width: 1000px )
+    .zoom-in
+        transform: scale(3.5) translateY(-7rem) translateX(-4rem)
+    main
+        .pages
+            height: 70%
+
+@media screen and ( min-width: 1100px )
+    main
+        .cases-spot
+            right: 20%
+
+@media screen and ( min-width: 1200px )
+    main
+        .cases-spot
+            max-width: 500
+            height: 90%
