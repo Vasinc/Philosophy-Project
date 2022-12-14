@@ -34,6 +34,12 @@ main {
   display: none !important;
 }
 
+.display-flex {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
 #backdrop {
   position: absolute;
   width: 100%;
@@ -51,7 +57,7 @@ main {
   max-width: 325px;
   font-weight: 700;
   font-size: 1.25rem;
-  background: white;
+  background: #fff;
   padding: 1rem;
   text-align: center;
   border-radius: 1rem;
@@ -119,7 +125,7 @@ main {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: white;
+  background: #fff;
   border: 1px solid black;
 }
 
@@ -170,7 +176,17 @@ main {
 }
 
 .cases-spot {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: absolute;
+  gap: 100%;
   height: 70%;
   width: 50%;
   max-width: 450px;
@@ -178,8 +194,67 @@ main {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  background: green;
-  opacity: .3;
+}
+
+.cases-spot .case {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background: #fff;
+  font-weight: 700;
+  line-height: 1.25;
+  -webkit-box-shadow: 6px 6px 2px 2px rgba(0, 0, 0, 0.6);
+          box-shadow: 6px 6px 2px 2px rgba(0, 0, 0, 0.6);
+  overflow: scroll;
+  border-radius: .5rem;
+}
+
+.cases-spot .case .underline-text {
+  text-decoration: underline;
+}
+
+.cases-spot .case .punishments {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.cases-spot .case .punishments .punishment {
+  padding: .5rem 1rem;
+  background: #7d8df2;
+  border: 1px solid black;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.cases-spot .case .submit-case {
+  margin: auto;
+  font-size: 1.15rem;
+  padding: .5rem 1rem;
+  background: #858585;
+  cursor: not-allowed;
+  border: none;
+}
+
+.cases-spot .break-button {
+  display: none;
+  padding: .5rem 1rem;
+  background: #0a1766;
+  color: white;
+  font-size: 1.15rem;
+  border: none;
+  cursor: pointer;
+  -webkit-box-shadow: 4px 4px 2px 2px rgba(0, 0, 0, 0.4);
+          box-shadow: 4px 4px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 @media screen and (min-width: 600px) {

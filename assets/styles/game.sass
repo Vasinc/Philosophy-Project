@@ -20,7 +20,12 @@ main
     scroll-behavior: smooth
 
 // variables
-
+$black: #000
+$white: #fff
+$crem: #faffa5
+$light-blue: #7d8df2
+$light-green: #b7ea84
+$grey: #858585
 
 // classes
 .zoom-in
@@ -32,8 +37,12 @@ main
 .display-none
     display: none !important
 
+.display-flex
+    display: flex !important
+
 // actual coding
 #backdrop
+    // display: none
     position: absolute
     width: 100%
     height: 100vh
@@ -41,6 +50,7 @@ main
     z-index: 1001
 
 .tutorial-message
+    // display: none
     position: absolute
     top: 50%
     left: 50%
@@ -48,7 +58,7 @@ main
     max-width: 325px
     font-weight: 700
     font-size: 1.25rem
-    background: white
+    background: $white
     padding: 1rem
     text-align: center
     border-radius: 1rem
@@ -99,13 +109,13 @@ main
     box-shadow: 8px 4px 6px 6px rgba(0, 0, 0, .7)
     &:hover
         .page:last-of-type
-            background: #faffa5
+            background: $crem
             transform: translateX(-2px) translateY(-14px)
     .page
         position: absolute
         height: 100%
         width: 100%
-        background: white
+        background: $white
         border: 1px solid black
     .page:nth-of-type(2)
         transform: translateX(-2px) translateY(-2px)
@@ -133,15 +143,63 @@ main
         transition: all 100ms linear
 
 .cases-spot
+    display: flex
+    justify-content: center
+    align-items: center
     position: absolute
+    gap: 100%
     height: 70%
     width: 50%
     max-width: 450px
     right: 1rem
     top: 50%
     transform: translateY(-50%)
-    background: green
-    opacity: .3
+    // background: green
+    // opacity: .3
+    .case
+        display: none
+        flex-direction: column
+        gap: 1rem
+        width: 100%
+        height: 100%
+        padding: 1rem
+        background: $white
+        font-weight: 700
+        line-height: 1.25
+        box-shadow: 6px 6px 2px 2px rgba(0, 0, 0, .6)
+        overflow: scroll
+        border-radius: .5rem
+        .underline-text
+            text-decoration: underline
+        .punishments
+            display: flex
+            flex-wrap: wrap
+            gap: 1.25rem
+            .punishment
+                padding: .5rem 1rem
+                background: $light-blue
+                border: 1px solid black
+                border-radius: .25rem
+                cursor: pointer
+        .submit-case
+            margin: auto
+            // max-width: 150px
+            font-size: 1.15rem
+            padding: .5rem 1rem
+            background: $grey
+            cursor: not-allowed
+            border: none
+    .break-button
+        display: none
+        padding: .5rem 1rem
+        background: darken($light-blue, 50%)
+        color: white
+        font-size: 1.15rem
+        // font-weight: 700
+        border: none
+        cursor: pointer
+        box-shadow: 4px 4px 2px 2px rgba(0, 0, 0, .4)
+
 
 @media screen and ( min-width: 600px )
     body
