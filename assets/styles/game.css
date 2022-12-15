@@ -41,6 +41,7 @@ main {
 }
 
 #backdrop {
+  display: none;
   position: absolute;
   width: 100%;
   height: 100vh;
@@ -49,6 +50,7 @@ main {
 }
 
 .tutorial-message {
+  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -79,6 +81,7 @@ main {
 }
 
 #courtyard {
+  display: none;
   height: 100vh;
   width: 100%;
   background: url("../images/judgeroom.jpg");
@@ -91,7 +94,6 @@ main {
 }
 
 #desk {
-  display: none;
   position: relative;
   height: 100vh;
   width: 100%;

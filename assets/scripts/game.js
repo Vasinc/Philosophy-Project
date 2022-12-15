@@ -11,6 +11,19 @@ const pageNumber = document.getElementById('page-number');
 const caseNumber = document.getElementById('case-number');
 const breakBtn = document.querySelector('.break-button');
 
+let currentPunishment;
+let givenPunishments = {"fine": 0, "jail": 0, "community-service": 0, "capital-punishment": 0, "let-free": 0}
+
+onload = () => {
+    if (!localStorage.getItem('storedPunishments')) return;
+    givenPunishments = JSON.parse(localStorage.getItem('storedPunishments'));
+    if(!localStorage.getItem('storedCase')) {
+        pageNumber.textContent = 1;
+    } else {
+        pageNumber.textContent = localStorage.getItem('storedCase')
+    }
+}
+
 courtYard.addEventListener('click', () => {
     courtYard.classList.add('zoom-in');
     setTimeout(() => {
@@ -28,6 +41,7 @@ punishmentsContainer.addEventListener('click', event => {
     if(event.target.className == 'punishment') {
         submitBtn.style.background = '#b7ea84';
         submitBtn.style.cursor = 'pointer';
+        currentPunishment = event.target.textContent.trim().toLowerCase().replaceAll(' ', '-');
     } else {
         submitBtn.style.background = '#858585'
         submitBtn.style.cursor = 'not-allowed'
@@ -47,17 +61,22 @@ submitBtn.addEventListener('click', () => {
     if (submitBtn.style.cursor == 'not-allowed') return;
     caseUI.classList.remove('display-flex')
     breakBtn.classList.add('display-block');
+    givenPunishments[`${currentPunishment}`] += 1;
+    localStorage.setItem('storedPunishments', JSON.stringify(givenPunishments));
+    console.log(givenPunishments);
 })
 
 pages.addEventListener('click', () => {
     if (caseUI.classList.contains('display-flex')) {
         alert('You already have a case on the table!')
+        // document.activeElement.blur();
     } else { 
+        // document.activeElement.blur();
         breakBtn.classList.remove('display-block');
         caseUI.classList.add('display-flex');
         caseNumber.textContent = parseInt(pageNumber.textContent);
         pageNumber.textContent = parseInt(pageNumber.textContent) + 1
-
+        localStorage.setItem('storedCase', parseInt(pageNumber.textContent));
         for (const punishment of punishments) { 
             punishment.style.background = '#7d8df2'
             punishment.style.color = 'black'
