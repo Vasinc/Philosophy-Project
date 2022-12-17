@@ -10,9 +10,58 @@ const pages = document.querySelector('.pages');
 const pageNumber = document.getElementById('page-number');
 const caseNumber = document.getElementById('case-number');
 const breakBtn = document.querySelector('.break-button');
+const infoSection = document.getElementById('info-section');
+const continueBtn = document.getElementById('continue-button');
+const homepageBtn = document.getElementById('homepage-button');
+const infos = document.querySelectorAll('.info');
+const judgeType = document.getElementById('judge-type');
 
 let currentPunishment;
-let givenPunishments = {"fine": 0, "jail": 0, "community-service": 0, "capital-punishment": 0, "let-free": 0}
+let givenPunishments = {"let-free": 0, "community-service": 0, "fine": 0, "jail": 0, "capital-punishment": 0}
+
+function updateInfo () {
+    const values = Object.values(givenPunishments);
+
+    for (let i = 0; i < infos.length; i++) {
+        const info = infos[i];
+        info.textContent = values[i];
+    }
+}
+
+function updateJudgeType () {
+    let value = 0;
+    let totalValue = 0;
+
+    for (let i = 0; i < Object.values(givenPunishments).length; i++) {
+        const objVal = Object.values(givenPunishments)[i];
+        
+        value += objVal * (i + 1);
+    }
+
+    for (let i = 0; i < Object.values(givenPunishments).length; i++) {
+        const objVal = Object.values(givenPunishments)[i];
+        totalValue += objVal;
+    }
+
+    if( value <= totalValue * 1) {
+        judgeType.textContent = 'forgiving'
+        judgeType.style.color = '#1CEF38';
+    } else if (value <= totalValue * 2 && value >= totalValue * 1){
+        judgeType.textContent = 'clement'
+        judgeType.style.color = '#1313FA';
+    } else if (value <= totalValue * 3 && value >= totalValue * 2){
+        judgeType.textContent = 'mediocre'
+        judgeType.style.color = '#ECEC00';
+    } else if (value <= totalValue * 4 && value >= totalValue * 3){
+        judgeType.textContent = 'harsh'
+        judgeType.style.color = '#B95600';
+    } else if (value <= totalValue * 5 && value >= totalValue * 4){
+        judgeType.textContent = 'cruel'
+        judgeType.style.color = '#FF0000';
+    }
+
+    // console.log(value);
+}
 
 onload = () => {
     if (!localStorage.getItem('storedPunishments')) return;
@@ -29,12 +78,14 @@ courtYard.addEventListener('click', () => {
     setTimeout(() => {
         courtYard.style.display = 'none';
         desk.classList.add('display-block')
+        courtYard.classList.remove('zoom-in');
     }, 500)
 })
 
 backdrop.addEventListener('click', () => {
     backdrop.classList.add('display-none');
-    tutorialMessage.classList.add('display-none')
+    tutorialMessage.classList.add('display-none');
+    infoSection.classList.remove('display-flex')
 })
 
 punishmentsContainer.addEventListener('click', event => {
@@ -63,7 +114,7 @@ submitBtn.addEventListener('click', () => {
     breakBtn.classList.add('display-block');
     givenPunishments[`${currentPunishment}`] += 1;
     localStorage.setItem('storedPunishments', JSON.stringify(givenPunishments));
-    console.log(givenPunishments);
+    // console.log(givenPunishments);
 })
 
 pages.addEventListener('click', () => {
@@ -84,4 +135,25 @@ pages.addEventListener('click', () => {
         submitBtn.style.background = '#858585'
         submitBtn.style.cursor = 'not-allowed'
     }
+})
+
+breakBtn.addEventListener('click', () => {
+    infoSection.classList.add('display-flex');
+    updateInfo();
+    updateJudgeType();
+    backdrop.classList.remove('display-none')
+})
+
+continueBtn.addEventListener('click', () => {
+    backdrop.classList.add('display-none');
+    infoSection.classList.remove('display-flex');
+    breakBtn.classList.remove('display-block');
+})
+
+homepageBtn.addEventListener('click', () => {
+    courtYard.style.display = 'block';
+    desk.classList.remove('display-block')
+    backdrop.classList.add('display-none');
+    infoSection.classList.remove('display-flex');
+    breakBtn.classList.remove('display-block');
 })
