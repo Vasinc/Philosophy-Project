@@ -27,6 +27,7 @@ $light-blue: #7d8df2
 $light-green: #b7ea84
 $grey: #858585
 $yellow: #d7ba02
+$red: #ff0000
 
 // classes
 .zoom-in
@@ -75,6 +76,7 @@ $yellow: #d7ba02
             font-weight: 700
             border: none
             border-radius: .5rem
+            cursor: pointer
         #continue-button
             background: darken($light-blue, 60%)
             color: $white
@@ -107,6 +109,20 @@ $yellow: #d7ba02
     img
         height: 2rem
         width: 4rem
+
+#reset-button
+    display: none
+    position: absolute
+    top: 1rem
+    right: 1rem
+    padding: .5rem 1rem
+    font-size: 1.05rem
+    font-weight: 700
+    background: $red
+    cursor: pointer
+    z-index: 1000
+    border: none
+    border-radius: .25rem
 
 #courtyard
     // display: none

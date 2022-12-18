@@ -15,9 +15,32 @@ const continueBtn = document.getElementById('continue-button');
 const homepageBtn = document.getElementById('homepage-button');
 const infos = document.querySelectorAll('.info');
 const judgeType = document.getElementById('judge-type');
+const personName = document.getElementById('name');
+const personDescription = document.getElementById('description');
+const personCrime = document.getElementById('crime');
+const resetBtn = document.getElementById('reset-button');
+
+const url = 'https://randomuser.me/api';
+
+async function getRandomPerson() {
+  const response = await fetch(url);
+  const data = await response.json();
+  const name = data.results[0].name;
+  personName.textContent = `${name.first} ${name.last}`;
+  const user = data.results[0];
+  personDescription.textContent = `${user.name.first} ${user.name.last} is a ${user.dob.age}-year-old ${user.gender} from ${user.location.city}, ${user.location.country}.`
+}
+
 
 let currentPunishment;
 let givenPunishments = {"let-free": 0, "community-service": 0, "fine": 0, "jail": 0, "capital-punishment": 0}
+
+const crimes = ["Armed Robbery","Assault","Burglary","Carjacking","Child Abuse","Computer Hacking","Credit Card Fraud","Criminal Damage","Criminal Trespass","Drug Possession","Drug Trafficking","Embezzlement","Extortion","Forgery","Fraud","Harassment","Identity Theft","Kidnapping","Manslaughter","Money Laundering","Murder","Organized Crime","Perjury","Prostitution","Public Intoxication","Rape","Robbery","Shoplifting","Smuggling","Solicitation","Stalking","Theft","Vandalism","White Collar Crime","Arson","Blackmail","Bribery","Conspiracy","Counterfeiting","Cyberbullying","Cyberstalking","Disorderly Conduct","DUI","Espionage","Fencing","Gambling","Grand Theft Auto","Hate Crime","Human Trafficking","Impersonation","Insurance Fraud","Internet Fraud","Juvenile Delinquency","Libel","Malicious Mischief","Marijuana Possession","Obstruction of Justice","Piracy"]
+  
+function randomCrime() {
+    const rndNum = Math.floor(Math.random() * crimes.length);
+    return `${crimes[rndNum]}`;
+}
 
 function updateInfo () {
     const values = Object.values(givenPunishments);
@@ -47,7 +70,7 @@ function updateJudgeType () {
         judgeType.textContent = 'forgiving'
         judgeType.style.color = '#1CEF38';
     } else if (value <= totalValue * 2 && value >= totalValue * 1){
-        judgeType.textContent = 'clement'
+        judgeType.textContent = 'kind'
         judgeType.style.color = '#1313FA';
     } else if (value <= totalValue * 3 && value >= totalValue * 2){
         judgeType.textContent = 'mediocre'
@@ -112,6 +135,7 @@ submitBtn.addEventListener('click', () => {
     if (submitBtn.style.cursor == 'not-allowed') return;
     caseUI.classList.remove('display-flex')
     breakBtn.classList.add('display-block');
+    resetBtn.classList.add('display-block');
     givenPunishments[`${currentPunishment}`] += 1;
     localStorage.setItem('storedPunishments', JSON.stringify(givenPunishments));
     // console.log(givenPunishments);
@@ -120,13 +144,13 @@ submitBtn.addEventListener('click', () => {
 pages.addEventListener('click', () => {
     if (caseUI.classList.contains('display-flex')) {
         alert('You already have a case on the table!')
-        // document.activeElement.blur();
     } else { 
-        // document.activeElement.blur();
+        getRandomPerson()
+        personCrime.textContent = randomCrime();
         breakBtn.classList.remove('display-block');
         caseUI.classList.add('display-flex');
         caseNumber.textContent = parseInt(pageNumber.textContent);
-        pageNumber.textContent = parseInt(pageNumber.textContent) + 1
+        pageNumber.textContent = parseInt(pageNumber.textContent) + 1;
         localStorage.setItem('storedCase', parseInt(pageNumber.textContent));
         for (const punishment of punishments) { 
             punishment.style.background = '#7d8df2'
@@ -156,4 +180,11 @@ homepageBtn.addEventListener('click', () => {
     backdrop.classList.add('display-none');
     infoSection.classList.remove('display-flex');
     breakBtn.classList.remove('display-block');
+})
+
+resetBtn.addEventListener('click', () => {
+    if (!localStorage.getItem('storedPunishments')) return;
+    localStorage.removeItem('storedPunishments');
+    localStorage.removeItem('storedCase');
+    location.reload(true)
 })
