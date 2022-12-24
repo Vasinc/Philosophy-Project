@@ -20,6 +20,26 @@ const personDescription = document.getElementById('description');
 const personCrime = document.getElementById('crime');
 const resetBtn = document.getElementById('reset-button');
 
+
+// sunet de foaie cand dai pe foaie si sa se auda sunet cand dai pe un button ( la toate )
+
+// sa fac tutorial la desk
+
+// sa verific daca o facut tutorial, daca da, sa nu mai apara tutorial dupa ce dai refresh
+
+// sa restructurez un pic codul
+
+// sounds
+const orderSound = new Audio('./sounds/order.mp3');
+const peopleTalkingSound = new Audio('./sounds/talking.mp3')
+const stampSound = new Audio('./sounds/stamp.mp3')
+
+// sounds volume
+orderSound.volume = .5;
+peopleTalkingSound.volume = .5;
+stampSound.volume = .5;
+
+
 const url = 'https://randomuser.me/api';
 
 async function getRandomPerson() {
@@ -35,7 +55,7 @@ async function getRandomPerson() {
 let currentPunishment;
 let givenPunishments = {"let-free": 0, "community-service": 0, "fine": 0, "jail": 0, "capital-punishment": 0}
 
-const crimes = ["Armed Robbery","Assault","Burglary","Carjacking","Child Abuse","Computer Hacking","Credit Card Fraud","Criminal Damage","Criminal Trespass","Drug Possession","Drug Trafficking","Embezzlement","Extortion","Forgery","Fraud","Harassment","Identity Theft","Kidnapping","Manslaughter","Money Laundering","Murder","Organized Crime","Perjury","Prostitution","Public Intoxication","Rape","Robbery","Shoplifting","Smuggling","Solicitation","Stalking","Theft","Vandalism","White Collar Crime","Arson","Blackmail","Bribery","Conspiracy","Counterfeiting","Cyberbullying","Cyberstalking","Disorderly Conduct","DUI","Espionage","Fencing","Gambling","Grand Theft Auto","Hate Crime","Human Trafficking","Impersonation","Insurance Fraud","Internet Fraud","Juvenile Delinquency","Libel","Malicious Mischief","Marijuana Possession","Obstruction of Justice","Piracy"]
+const crimes = ["Armed Robbery","Assault","Burglary","Carjacking","Child Abuse","Computer Hacking","Credit Card Fraud","Criminal Damage","Criminal Trespass","Drug Possession","Drug Trafficking","Embezzlement","Extortion","Forgery","Fraud","Harassment","Identity Theft","Kidnapping","Manslaughter","Money Laundering","Murder","Organized Crime","Perjury","Prostitution","Public Intoxication","Rape","Robbery","Shoplifting","Smuggling","Solicitation","Stalking","Theft","Vandalism","White Collar Crime","Arson","Blackmail","Bribery","Conspiracy","Counterfeiting","Cyberbullying","Cyberstalking","Disorderly Conduct","DUI","Espionage","Fencing","Gambling","Grand Theft Auto","Hate Crime","Human Trafficking","Impersonation","Insurance Fraud","Internet Fraud","Juvenile Delinquency","Libel","Malicious Mischief","Marijuana Possession","Obstruction of Justice","Piracy","Murder of a Police Officer","Murder for hire","Murder committed during a prison escape","Murdered a judge","Protesting","Drinking in public","Disturbing public peace", "Speeding","Bullying"]
   
 function randomCrime() {
     const rndNum = Math.floor(Math.random() * crimes.length);
@@ -87,8 +107,13 @@ function updateJudgeType () {
 }
 
 onload = () => {
+
     if (!localStorage.getItem('storedPunishments')) return;
     givenPunishments = JSON.parse(localStorage.getItem('storedPunishments'));
+    setTimeout(() => {
+        breakBtn.classList.add('display-block');
+        resetBtn.classList.add('display-block')
+    }, 100);
     if(!localStorage.getItem('storedCase')) {
         pageNumber.textContent = 1;
     } else {
@@ -98,14 +123,22 @@ onload = () => {
 
 courtYard.addEventListener('click', () => {
     courtYard.classList.add('zoom-in');
+    peopleTalkingSound.pause();
+    peopleTalkingSound.currentTime = 0;
+    orderSound.play();
     setTimeout(() => {
         courtYard.style.display = 'none';
         desk.classList.add('display-block')
         courtYard.classList.remove('zoom-in');
-    }, 500)
+        orderSound.pause();
+        orderSound.currentTime = 0;
+    }, 3600)
 })
 
 backdrop.addEventListener('click', () => {
+    if(!tutorialMessage.classList.contains('display-none')) {
+        peopleTalkingSound.play();
+    }
     backdrop.classList.add('display-none');
     tutorialMessage.classList.add('display-none');
     infoSection.classList.remove('display-flex')
@@ -116,17 +149,22 @@ punishmentsContainer.addEventListener('click', event => {
         submitBtn.style.background = '#b7ea84';
         submitBtn.style.cursor = 'pointer';
         currentPunishment = event.target.textContent.trim().toLowerCase().replaceAll(' ', '-');
+        stampSound.play();
+        setTimeout(() => {
+            stampSound.pause();
+            stampSound.currentTime = 0;
+        }, 300);
     } else {
         submitBtn.style.background = '#858585'
         submitBtn.style.cursor = 'not-allowed'
     }
     for (const punishment of punishments) {
         if(punishment === event.target) {
-            punishment.style.background = '#0F2194'
-            punishment.style.color = 'white'
+            punishment.querySelector('.stamp-spot').classList.remove('display-none');
+            punishment.style.background = 'white'
         } else {
+            punishment.querySelector('.stamp-spot').classList.add('display-none');
             punishment.style.background = '#7d8df2'
-            punishment.style.color = 'black'
         }
     }
 })
@@ -138,6 +176,9 @@ submitBtn.addEventListener('click', () => {
     resetBtn.classList.add('display-block');
     givenPunishments[`${currentPunishment}`] += 1;
     localStorage.setItem('storedPunishments', JSON.stringify(givenPunishments));
+    for (const punishment of punishments) {
+            punishment.querySelector('.stamp-spot').classList.add('display-none');
+    }
     // console.log(givenPunishments);
 })
 
@@ -165,6 +206,7 @@ breakBtn.addEventListener('click', () => {
     infoSection.classList.add('display-flex');
     updateInfo();
     updateJudgeType();
+    console.log(givenPunishments)
     backdrop.classList.remove('display-none')
 })
 
@@ -180,6 +222,7 @@ homepageBtn.addEventListener('click', () => {
     backdrop.classList.add('display-none');
     infoSection.classList.remove('display-flex');
     breakBtn.classList.remove('display-block');
+    peopleTalkingSound.play();
 })
 
 resetBtn.addEventListener('click', () => {

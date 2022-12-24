@@ -151,8 +151,8 @@ main {
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  -webkit-transition: all 400ms linear;
-  transition: all 400ms linear;
+  -webkit-transition: all 3000ms linear;
+  transition: all 3000ms linear;
 }
 
 #desk {
@@ -294,11 +294,26 @@ main {
 }
 
 .cases-spot .case .punishments .punishment {
+  position: relative;
   padding: .5rem 1rem;
   background: #7d8df2;
   border: 1px solid black;
   border-radius: .25rem;
   cursor: pointer;
+}
+
+.cases-spot .case .punishments .punishment .stamp-spot {
+  position: absolute;
+  height: 5rem;
+  width: 5rem;
+  background: url("../images/stamp.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%) rotate(-35deg);
+          transform: translate(-50%, -50%) rotate(-35deg);
 }
 
 .cases-spot .case .submit-case {
@@ -307,7 +322,7 @@ main {
   padding: .5rem 1rem;
   background: #858585;
   cursor: not-allowed;
-  border: none;
+  border: 1px solid #000;
 }
 
 .cases-spot .break-button {

@@ -133,7 +133,7 @@ $red: #ff0000
     background-size: cover
     background-position: center
     cursor: pointer
-    transition: all 400ms linear
+    transition: all 3000ms linear
 
 #desk
     display: none
@@ -224,11 +224,24 @@ $red: #ff0000
             flex-wrap: wrap
             gap: 1.25rem
             .punishment
+                position: relative
                 padding: .5rem 1rem
                 background: $light-blue
                 border: 1px solid black
                 border-radius: .25rem
                 cursor: pointer
+                .stamp-spot
+                    position: absolute
+                    height: 5rem
+                    width: 5rem
+                    background: url('../images/stamp.png')
+                    background-repeat: no-repeat
+                    background-position: center
+                    background-size: cover
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%, -50%) rotate(-35deg)
+
         .submit-case
             margin: auto
             // max-width: 150px
@@ -236,7 +249,7 @@ $red: #ff0000
             padding: .5rem 1rem
             background: $grey
             cursor: not-allowed
-            border: none
+            border: 1px solid $black
     .break-button
         display: none
         padding: .5rem 1rem
