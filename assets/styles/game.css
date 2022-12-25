@@ -151,8 +151,8 @@ main {
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  -webkit-transition: all 3000ms linear;
-  transition: all 3000ms linear;
+  -webkit-transition: all 1000ms linear;
+  transition: all 1000ms linear;
 }
 
 #desk {

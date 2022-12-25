@@ -1,3 +1,4 @@
+// consts
 const backdrop = document.getElementById('backdrop');
 const tutorialMessage = document.querySelector('.tutorial-message')
 const courtYard = document.getElementById('courtyard');
@@ -20,24 +21,23 @@ const personDescription = document.getElementById('description');
 const personCrime = document.getElementById('crime');
 const resetBtn = document.getElementById('reset-button');
 
-
-// sunet de foaie cand dai pe foaie si sa se auda sunet cand dai pe un button ( la toate )
-
-// sa fac tutorial la desk
-
-// sa verific daca o facut tutorial, daca da, sa nu mai apara tutorial dupa ce dai refresh
-
-// sa restructurez un pic codul
+// lets
+let currentPunishment;
+let givenPunishments = {"let-free": 0, "community-service": 0, "fine": 0, "jail": 0, "capital-punishment": 0}
 
 // sounds
 const orderSound = new Audio('./sounds/order.mp3');
 const peopleTalkingSound = new Audio('./sounds/talking.mp3')
 const stampSound = new Audio('./sounds/stamp.mp3')
+const paperSound = new Audio('./sounds/paper.mp3');
+const buttonSound = new Audio('./sounds/button.mp3');
 
 // sounds volume
 orderSound.volume = .5;
 peopleTalkingSound.volume = .5;
 stampSound.volume = .5;
+paperSound.volume = .5;
+buttonSound.volume = .5;
 
 
 const url = 'https://randomuser.me/api';
@@ -52,8 +52,6 @@ async function getRandomPerson() {
 }
 
 
-let currentPunishment;
-let givenPunishments = {"let-free": 0, "community-service": 0, "fine": 0, "jail": 0, "capital-punishment": 0}
 
 const crimes = ["Armed Robbery","Assault","Burglary","Carjacking","Child Abuse","Computer Hacking","Credit Card Fraud","Criminal Damage","Criminal Trespass","Drug Possession","Drug Trafficking","Embezzlement","Extortion","Forgery","Fraud","Harassment","Identity Theft","Kidnapping","Manslaughter","Money Laundering","Murder","Organized Crime","Perjury","Prostitution","Public Intoxication","Rape","Robbery","Shoplifting","Smuggling","Solicitation","Stalking","Theft","Vandalism","White Collar Crime","Arson","Blackmail","Bribery","Conspiracy","Counterfeiting","Cyberbullying","Cyberstalking","Disorderly Conduct","DUI","Espionage","Fencing","Gambling","Grand Theft Auto","Hate Crime","Human Trafficking","Impersonation","Insurance Fraud","Internet Fraud","Juvenile Delinquency","Libel","Malicious Mischief","Marijuana Possession","Obstruction of Justice","Piracy","Murder of a Police Officer","Murder for hire","Murder committed during a prison escape","Murdered a judge","Protesting","Drinking in public","Disturbing public peace", "Speeding","Bullying"]
   
@@ -102,13 +100,13 @@ function updateJudgeType () {
         judgeType.textContent = 'cruel'
         judgeType.style.color = '#FF0000';
     }
-
-    // console.log(value);
 }
 
 onload = () => {
-
     if (!localStorage.getItem('storedPunishments')) return;
+    backdrop.classList.add('display-none');
+    tutorialMessage.classList.add('display-none')
+    peopleTalkingSound.play();
     givenPunishments = JSON.parse(localStorage.getItem('storedPunishments'));
     setTimeout(() => {
         breakBtn.classList.add('display-block');
@@ -132,7 +130,7 @@ courtYard.addEventListener('click', () => {
         courtYard.classList.remove('zoom-in');
         orderSound.pause();
         orderSound.currentTime = 0;
-    }, 3600)
+    }, 1200)
 })
 
 backdrop.addEventListener('click', () => {
@@ -171,6 +169,7 @@ punishmentsContainer.addEventListener('click', event => {
 
 submitBtn.addEventListener('click', () => {
     if (submitBtn.style.cursor == 'not-allowed') return;
+    buttonSound.play();
     caseUI.classList.remove('display-flex')
     breakBtn.classList.add('display-block');
     resetBtn.classList.add('display-block');
@@ -179,13 +178,13 @@ submitBtn.addEventListener('click', () => {
     for (const punishment of punishments) {
             punishment.querySelector('.stamp-spot').classList.add('display-none');
     }
-    // console.log(givenPunishments);
 })
 
 pages.addEventListener('click', () => {
     if (caseUI.classList.contains('display-flex')) {
         alert('You already have a case on the table!')
     } else { 
+        paperSound.play();
         getRandomPerson()
         personCrime.textContent = randomCrime();
         breakBtn.classList.remove('display-block');
@@ -203,6 +202,7 @@ pages.addEventListener('click', () => {
 })
 
 breakBtn.addEventListener('click', () => {
+    buttonSound.play();
     infoSection.classList.add('display-flex');
     updateInfo();
     updateJudgeType();
@@ -211,18 +211,20 @@ breakBtn.addEventListener('click', () => {
 })
 
 continueBtn.addEventListener('click', () => {
+    buttonSound.play();
     backdrop.classList.add('display-none');
     infoSection.classList.remove('display-flex');
     breakBtn.classList.remove('display-block');
 })
 
 homepageBtn.addEventListener('click', () => {
+    buttonSound.play();
+    peopleTalkingSound.play();
     courtYard.style.display = 'block';
     desk.classList.remove('display-block')
     backdrop.classList.add('display-none');
     infoSection.classList.remove('display-flex');
     breakBtn.classList.remove('display-block');
-    peopleTalkingSound.play();
 })
 
 resetBtn.addEventListener('click', () => {
